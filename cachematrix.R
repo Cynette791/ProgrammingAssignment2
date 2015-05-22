@@ -1,7 +1,8 @@
-## Put comments here that give an overall description of what your
-## functions do
-
-## Write a short comment describing this function
+## The function makeCacheMatrix creates a list "vector" that consist of the following functions:
+##	1. set : set value of the vector
+##	2. get : set value of the vector
+##	3. setinverse : set value of the inverse
+##	4. getinverse : set value of the inverse
 
 makeCacheMatrix <- function(x = matrix()) {
         m <- NULL
@@ -10,24 +11,26 @@ makeCacheMatrix <- function(x = matrix()) {
                 m <<- NULL
         }
         get <- function() x
-        setinvers <- function(solve) m <<- solve
-        getinvers <- function() m
+        setinverse <- function(solve) m <<- solve
+        getinverse <- function() m
         list(set = set, get = get,
-             setinvers = setinvers,
-             getinvers = getinvers)
+             setinverse = setinverse,
+             getinverse = getinverse)
 }
 
 
-## Write a short comment describing this function
+## This function is set to calculate the inverse of 
+## a given matrix using functions that are 
+## listed by the makeCacheMatrix function above.
 
 cacheSolve <- function(x, ...) {
-        m <- x$getinvers()
-        if(!is.null(m)) {
-                message("getting cached data")
-                return(m)
+        m <- x$getinverse()			## Loading the cached inverse of a matrix (if any) to variable 'm'.
+        if(!is.null(m)) {			## Checking if there's any inverse cached.
+                message("getting cached data")	## If there IS a cached matrix, the function stops here...
+                return(m)			## and returs the cached matrix.
         }
-        data <- x$get()
-        m <- solve(data, ...)
-        x$setinvers(m)
-        m
+        data <- x$get()				## If there's NO inverse cached, the function follows by loading the matrix
+        m <- solve(data, ...)			## Proceed to inverse the matrix
+        x$setinverse(m)				## Caching the inverse value 
+        m					## Printing the inverse (m)
 }
